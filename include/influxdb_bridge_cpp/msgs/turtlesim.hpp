@@ -1,0 +1,8 @@
+#ifndef INFLUXDBBDRIDGE_MSG_TURTLESIM_HPP__
+#define INFLUXDBBDRIDGE_MSG_TURTLESIM_HPP__
+
+#ifdef WITH_TURTLESIM
+#include <turtlesim/msg/pose.hpp>
+#endif
+
+#endif  // INFLUXDBBDRIDGE_MSG_TURTLESIM_HPP__
