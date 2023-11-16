@@ -1,3 +1,14 @@
+# Text files (usually for configuration of the node)
+*.txt
+
+# Editor files
+*.swp
+*.swo
+*.swn
+compile_commands.json
+.vscode/
+
+
 # Prerequisites
 *.d
 
