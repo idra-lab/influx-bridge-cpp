@@ -1,5 +1,9 @@
 # Text files (usually for configuration of the node)
 *.txt
+!CMakeLists.txt
+
+# Files that are congifured by CMake
+include/influxdb_brdige_cpp/defines.hpp
 
 # Editor files
 *.swp
@@ -7,6 +11,7 @@
 *.swn
 compile_commands.json
 .vscode/
+.cache/
 
 
 # Prerequisites
