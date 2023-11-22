@@ -2,6 +2,7 @@
 #define INFLUXDBBDRIDGE_MSG_STD_MSGS_HPP__
 
 #ifdef WITH_STD_MSGS
+#include <std_msgs/msg/float64_multi_array.hpp>
 #include <std_msgs/msg/string.hpp>
 #endif
 

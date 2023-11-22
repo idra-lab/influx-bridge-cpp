@@ -2,6 +2,7 @@
 #define INFLUXDBBDRIDGE_MSG_BASE_HPP__
 
 #ifdef WITH_BASE
+// your imports here
 
 #endif
 

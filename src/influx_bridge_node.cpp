@@ -2,8 +2,10 @@
 #include <string>
 
 #include <influxdb_bridge_cpp/influx_bridge_node.hpp>
+#include <influxdb_bridge_cpp/msgs/sensor_msgs.hpp>
+#include <influxdb_bridge_cpp/msgs/std_msgs.hpp>
+#include <influxdb_bridge_cpp/msgs/turtlesim.hpp>
 #include <rclcpp/rclcpp.hpp>
-#include <turtlesim/msg/pose.hpp>
 
 using influxdb::InfluxBridgeNode;
 
@@ -45,8 +47,17 @@ void InfluxBridgeNode::add_subscriber(std::string                topic_name,
                                       std::optional<std::string> measure_name) {
     bool subcriber_added = false;
 
+#ifdef WITH_STD_MSGS
+    REGISTER_NEW_MSG_TYPE("std_msgs/String", std_msgs::msg::String)
+    REGISTER_NEW_MSG_TYPE("std_msgs/Float64MultiArray", std_msgs::msg::Float64MultiArray)
+#endif
+
 #ifdef WITH_TURTLESIM
     REGISTER_NEW_MSG_TYPE("turtlesim/Pose", turtlesim::msg::Pose)
+#endif
+
+#ifdef WITH_SENSOR_MSGS
+    REGISTER_NEW_MSG_TYPE("sensor_msgs/JointState", sensor_msgs::msg::JointState)
 #endif
 
     if (!subcriber_added) {

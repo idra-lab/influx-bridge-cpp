@@ -22,7 +22,8 @@ namespace influxdb {
         template <typename T>
         void topic_callback(
             const T msg, const std::optional<std::string> measure_name = std::nullopt) {
-            _collected_points.push_back(create_measurement_point<T>(msg, measure_name));
+            _collected_points.push_back(create_measurement_point<T>(
+                msg, measure_name, this->get_clock()->now().nanoseconds()));
         }
 
     public:
