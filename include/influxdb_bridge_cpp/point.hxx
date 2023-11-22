@@ -12,6 +12,9 @@
 
 #include <influxdb_bridge_cpp/point.hpp>
 
+// Enable the following flag to export the size of std::vector<T> as a field
+// #define EXPORT_VECTOR_SIZE
+
 using influxdb::Point;
 using influxdb::Valuepair;
 
@@ -79,9 +82,11 @@ struct is_std_vector<std::vector<T>> : std::true_type {};
 
 template <typename T>
 Point& Point::add_key(const Valuepair<T>& pair) {
+#ifdef EXPORT_VECTOR_SIZE
     if constexpr (is_std_vector<T>::value) {
         add_field<std::size_t>(MAKE_VALUEPAIR("vector_size", pair.second.size()));
     }
+#endif
     _key_string += "," + valuepair_to_string(pair);
     return *this;
 }

@@ -45,8 +45,9 @@ namespace influxdb {
     // Take a look at IMPLEMENT_MEASUREMENT at the bottom of the file for a macro that
     // makes the implementation easier.
     template <typename T>
-    Point create_measurement_point(
-        const T& message, std::optional<std::string> measure_name = std::nullopt);
+    Point create_measurement_point(const T&                   message,
+                                   std::optional<std::string> measure_name = std::nullopt,
+                                   const std::optional<long>& timestamp = std::nullopt);
 
 };  // namespace influxdb
 
@@ -63,9 +64,11 @@ namespace influxdb {
 #define IMPLEMENT_MEASUREMENT(type, default_name, implementation)                        \
     template <>                                                                          \
     influxdb::Point influxdb::create_measurement_point<type::SharedPtr>(                 \
-        const type::SharedPtr& message, std::optional<std::string> measure_name) {       \
+        const type::SharedPtr& message, std::optional<std::string> measure_name,         \
+        const std::optional<long>& timestamp) {                                          \
         influxdb::Point point = influxdb::Point(measure_name.value_or(default_name));    \
         implementation;                                                                  \
+        if (timestamp.has_value()) { point.set_timestamp(timestamp.value()); }           \
         return point;                                                                    \
     }
 
