@@ -10,7 +10,9 @@
 using influxdb::InfluxBridgeNode;
 
 InfluxBridgeNode::InfluxBridgeNode(std::optional<std::string> node_name) :
-        Node(node_name.value_or("influxdb_bridge_node")) {}
+        Node(node_name.value_or("influxdb_bridge_node")) {
+    _collection_enabled = false;
+}
 
 std::string InfluxBridgeNode::export_points(const std::string& common_fields) const {
     std::string result = "";
@@ -19,6 +21,12 @@ std::string InfluxBridgeNode::export_points(const std::string& common_fields) co
     }
     return result;
 }
+
+void InfluxBridgeNode::enable_data_collection() { _collection_enabled = true; }
+
+void InfluxBridgeNode::disable_data_collection() { _collection_enabled = false; }
+
+bool InfluxBridgeNode::data_collection_status() const { return _collection_enabled; }
 
 #define REGISTER_NEW_MSG_TYPE(type_literal, type_namespace)                              \
     if (topic_type == type_literal) {                                                    \

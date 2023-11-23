@@ -16,14 +16,17 @@ namespace influxdb {
     class InfluxBridgeNode : public rclcpp::Node {
     private:
         // https://stackoverflow.com/questions/26843024/array-of-shared-pointers-to-different-classes
+        bool                  _collection_enabled;
         std::vector<std::any> _subscribers;
         std::vector<Point>    _collected_points;
 
         template <typename T>
         void topic_callback(
             const T msg, const std::optional<std::string> measure_name = std::nullopt) {
-            _collected_points.push_back(create_measurement_point<T>(
-                msg, measure_name, this->get_clock()->now().nanoseconds()));
+            if (_collection_enabled) {
+                _collected_points.push_back(create_measurement_point<T>(
+                    msg, measure_name, this->get_clock()->now().nanoseconds()));
+            }
         }
 
     public:
@@ -34,6 +37,9 @@ namespace influxdb {
                                    std::optional<std::string> measure_name = std::nullopt);
         void        unsubscribe_all();
         std::string export_points(const std::string& common_fields = "") const;
+        void        enable_data_collection();
+        void        disable_data_collection();
+        bool        data_collection_status() const;
     };
 
 }  // namespace influxdb
