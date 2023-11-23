@@ -1,4 +1,5 @@
 # Text files (usually for configuration of the node)
+*.sh
 *.txt
 !CMakeLists.txt
 
