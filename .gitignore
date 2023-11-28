@@ -4,7 +4,7 @@
 !CMakeLists.txt
 
 # Files that are congifured by CMake
-include/influxdb_brdige_cpp/defines.hpp
+include/influxdb_bridge_cpp/defines.hpp
 
 # Editor files
 *.swp
